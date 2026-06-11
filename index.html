@@ -447,6 +447,38 @@
       fill: #667085;
       font-size: 11px;
     }
+    .histogram-legend {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(190px, 100%), 1fr));
+      gap: 8px;
+      margin: 10px 0 4px;
+      color: #475467;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+    .histogram-legend-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      min-width: 0;
+      padding: 8px 10px;
+      border: 1px solid #dbe7f3;
+      border-radius: 8px;
+      background: #f8fbff;
+    }
+    .legend-swatch {
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+      flex: 0 0 auto;
+      margin-top: 3px;
+    }
+    .legend-swatch.teal { background: var(--teal); }
+    .legend-swatch.amber { background: var(--amber); }
+    .legend-swatch.red { background: var(--red); }
+    .histogram-legend strong {
+      color: #233143;
+    }
     .profile-peaks {
       display: flex;
       flex-wrap: wrap;
@@ -878,8 +910,14 @@
             <h3>Overall delta_effect distribution</h3>
             <div id="delta-effect-stats" class="summary-grid"></div>
             <div id="delta-effect-histogram"></div>
+            <div class="histogram-legend" aria-label="Histogram color legend">
+              <div class="histogram-legend-item"><span class="legend-swatch teal"></span><span><strong>Teal</strong>: most mutant rows below q90. Taller bars mean more rows fall in that delta interval.</span></div>
+              <div class="histogram-legend-item"><span class="legend-swatch amber"></span><span><strong>Amber</strong>: q90 to q95, higher-than-usual signals but not the most extreme tail.</span></div>
+              <div class="histogram-legend-item"><span class="legend-swatch red"></span><span><strong>Red</strong>: q95 and above, representing the strongest-tail mutation-effect signals.</span></div>
+            </div>
             <div class="guide">
               <p>There is no fixed universal biological threshold for large or small deltas. Here we interpret values relative to the empirical distribution across all mutant rows in this run. Deltas above q95 can be treated as strong signals, and deltas above q99 as extremely strong signals.</p>
+              <p><strong>delta_effect = mutant_effect - WT_effect</strong>, so negative values mean the mutation made the site look closer to no effect. This is expected: the effect probability decreased relative to the WT baseline.</p>
             </div>
           </div>
           <div class="card">
